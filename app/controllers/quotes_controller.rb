@@ -1,7 +1,7 @@
 class QuotesController < Rulers::Controller
 
   def a_quote
-    render :a_quote, :noun => :winking
+    render :a_quote, :noun => :thinking
   end
 
   def quote_1
@@ -25,8 +25,9 @@ class QuotesController < Rulers::Controller
       "quote" => "A picture is worth a thousand pixels",
       "attribution" => "Me"
     }
+    user_agent = request.user_agent
     m = FileModel.create attrs
-    render :quote, :obj => m
+    render :quote, :obj => m, :user_agent => user_agent
   end
 
   def update
@@ -34,7 +35,8 @@ class QuotesController < Rulers::Controller
 
   def show
     quote = FileModel.find(params["id"])
-    render :quote, :obj => quote
+    user_agent = request.user_agent
+    render_response :quote, :obj => quote, :user_agent => user_agent
   end
 
 end
